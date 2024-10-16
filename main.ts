@@ -43,6 +43,10 @@ namespace pharmar2stack {
         }
         to.drawTransparentImage(src, x, y);
     }
+
+    export function print(i: Image, text: string, x: number, y: number, color: number) {
+        i.print(text, x, y, color)
+    }
     
 function CheckNumber (Text: string) {
     for (let I = 0; I <= Text.length - 1; I++) {
