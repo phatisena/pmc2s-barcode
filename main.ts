@@ -36,6 +36,14 @@ namespace pharmar2stack {
     let WriteYourSelf = false
     let CharOfError = "."
     let SetupDone = true
+
+    export function drawTransparentImage(src: Image, to: Image, x: number, y: number) {
+        if (!src || !to) {
+            return;
+        }
+        to.drawTransparentImage(src, x, y);
+    }
+    
 function CheckNumber (Text: string) {
     for (let I = 0; I <= Text.length - 1; I++) {
         if (!("0123456789".includes(Text.charAt(I)))) {
@@ -189,7 +197,7 @@ function DrawPramaCode (Hight: number, GapWidth: number, GapHight: number, Text:
     }
     BGpmcImg = image.create(GapWidth * 2 + PmcImgWidth, GapHight * 2 + Hight)
     BGpmcImg.fill(Wcol)
-    spriteutils.drawTransparentImage(PmcImg.clone(), BGpmcImg, GapWidth, GapHight)
+    drawTransparentImage(PmcImg.clone(), BGpmcImg, GapWidth, GapHight)
     if (Text) {
         images.printCenter(BGpmcImg, PmcHumanText, GapHight + (Hight - 8), Bcol)
     }
