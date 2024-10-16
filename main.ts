@@ -9,11 +9,6 @@ function CheckNumber (Text: string) {
     }
     return true
 }
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        Inum = Math.max(Inum - 1, 0)
-    }
-})
 function FindNormalDecimal (DecT: number[], Mdec: number) {
     J = 0
     for (let value of DecT) {
@@ -24,42 +19,7 @@ function FindNormalDecimal (DecT: number[], Mdec: number) {
     }
     return J
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        if (CheckVal > 0) {
-            CheckVal += 1
-            if (CheckVal > 1) {
-                pmcCheckSum = true
-            }
-            WriteYourSelf = !(ReadyToWritePramaCodeNumber(Itxt, pmcCheckSum))
-            if (WriteYourSelf) {
-                NotRespond = true
-                timer.after(800, function () {
-                    NotRespond = false
-                })
-            }
-            CheckVal = 0
-        } else {
-            CheckVal += 1
-        }
-    } else {
-        if (CheckVal > 0) {
-            CheckVal += 1
-            if (CheckVal > 1) {
-                pmcCheckSum = true
-            }
-            if (!(ReadyToWritePramaCodeNumber(GenerateNewPramaCodeNum(2, 12), pmcCheckSum))) {
-                NotRespond = true
-                timer.after(800, function () {
-                    NotRespond = false
-                })
-            }
-            CheckVal = 0
-        } else {
-            CheckVal += 1
-        }
-    }
-})
+
 function CalculatePramaDecimal (NumVal: number, MaxDecimal: number, Reverse: boolean) {
     ND = NumVal
     DecTable = [0]
@@ -86,11 +46,7 @@ function CalculatePramaDecimal (NumVal: number, MaxDecimal: number, Reverse: boo
     }
     return DecTable
 }
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        Inum = Math.min(Inum + 1, 9)
-    }
-})
+
 function SumTxtNumListFromPin (UtList: string[], RemDigit: number, CheckSum: boolean, I1: number, I2: number, TileSum: boolean, TileWidth: number) {
     N = 0
     for (let value of UtList) {
@@ -110,15 +66,7 @@ function SumTxtNumListFromPin (UtList: string[], RemDigit: number, CheckSum: boo
     }
     return N
 }
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        if (Itxt.isEmpty()) {
-            WriteYourSelf = false
-        } else {
-            Itxt = BackSpace(Itxt, 1)
-        }
-    }
-})
+
 function AddDecimalTextFromNumber (DecN: any[], Rem: number, Gap: number, Char: string, Cut: boolean) {
     TXT = ""
     I = 0
@@ -154,56 +102,11 @@ function GenerateNewPramaCodeNum (Min: number, Max: number) {
     }
     return t
 }
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        if (CheckVal > 0) {
-            CheckVal += 1
-            if (CheckVal > 1) {
-                pmcCheckSum = false
-            }
-            WriteYourSelf = !(ReadyToWritePramaCodeNumber(Itxt, pmcCheckSum))
-            if (WriteYourSelf) {
-                NotRespond = true
-                timer.after(800, function () {
-                    NotRespond = false
-                })
-            }
-            CheckVal = 0
-        } else {
-            WriteYourSelf = false
-        }
-    } else {
-        if (CheckVal > 0) {
-            CheckVal += 1
-            if (CheckVal > 1) {
-                pmcCheckSum = false
-            }
-            if (!(ReadyToWritePramaCodeNumber(GenerateNewPramaCodeNum(8, 12), pmcCheckSum))) {
-                NotRespond = true
-                timer.after(800, function () {
-                    NotRespond = false
-                })
-            }
-            CheckVal = 0
-        } else {
-            Itxt = ""
-            Inum = 0
-            WriteYourSelf = true
-        }
-    }
-})
+
 function Setup () {
     SetupPramaCode()
 }
-spriteutils.createRenderable(60, function (screen2) {
-    if (NotRespond) {
-        images.printCenter(screen2, "UnableToGenerate", scene.screenHeight() / 2, 1)
-    } else if (CheckVal > 0) {
-        images.printCenter(screen2, "A=Yes AddCheckSum? B=No", scene.screenHeight() / 2, 1)
-    } else if (WriteYourSelf) {
-        images.printCenter(screen2, "" + Itxt + ("[" + convertToText(Inum) + "]"), scene.screenHeight() / 2, 1)
-    }
-})
+
 function SumNumList (UnList: any[], RemDigit: number, CheckSum: boolean) {
     N = 0
     for (let value of UnList) {
@@ -224,11 +127,7 @@ function SumTxtNumList (UtList: string[], RemDigit: number, CheckSum: boolean) {
     }
     return N
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (WriteYourSelf) {
-        Itxt = "" + Itxt + convertToText(Inum)
-    }
-})
+
 function DrawPramaCode (Hight: number, GapWidth: number, GapHight: number, Text: boolean, Bcol: number, Wcol: number, Twidth: number, Border: boolean) {
     PmcImgWidth = SumTxtNumListFromPin(PmcL, 0, false, 0, 1, true, Twidth)
     PmcImg = image.create(PmcImgWidth, Hight)
@@ -365,37 +264,9 @@ let Inum = 0
 let CheckVal = 0
 let WriteYourSelf = false
 let CharOfError = ""
-scene.setBackgroundColor(15)
 CharOfError = "."
 Setup()
 ReadyToWritePramaCodeNumber(GenerateNewPramaCodeNum(2, 12), true)
 let SetupDone = true
 WriteYourSelf = false
 CheckVal = 0
-game.onUpdate(function () {
-    if (SetupDone) {
-        if (!(BarcodeSprite)) {
-            BarcodeSprite = sprites.create(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, SpriteKind.Barcode)
-        }
-        BarcodeSprite.setImage(BarcodeImage)
-        BarcodeSprite.x = scene.screenWidth() / 2
-        BarcodeSprite.top = 0
-    }
-})
