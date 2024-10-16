@@ -1,6 +1,41 @@
-namespace SpriteKind {
-    export const Barcode = SpriteKind.create()
-}
+namespace pharmar2stack {
+    let BarcodeSprite: Sprite = null
+    let PmcT = ""
+    let BinTable: number[] = []
+    let SumN = 0
+    let Tval = ""
+    let PmcTval = ""
+    let UtxtList: string[] = []
+    let PmcHumanText = ""
+    let BGpmcImg: Image = null
+    let PmcTile = 0
+    let PmcWi = 0
+    let PmcTi = ""
+    let WidthI = 0
+    let PmcImg: Image = null
+    let PmcL: string[] = []
+    let PmcImgWidth = 0
+    let t = ""
+    let BarcodeImage: Image = null
+    let I = 0
+    let TXT = ""
+    let PmcPin: string[][] = []
+    let Cidx = 0
+    let C = ""
+    let NL = 0
+    let N = 0
+    let NM = 0
+    let DecTable: number[] = []
+    let ND = 0
+    let NotRespond = false
+    let Itxt = ""
+    let pmcCheckSum = false
+    let J = 0
+    let Inum = 0
+    let CheckVal = 0
+    let WriteYourSelf = false
+    let CharOfError = "."
+    let SetupDone = true
 function CheckNumber (Text: string) {
     for (let I = 0; I <= Text.length - 1; I++) {
         if (!("0123456789".includes(Text.charAt(I)))) {
@@ -228,45 +263,5 @@ function TimeToEncodeToPramaCode () {
     PmcT = AddDecimalTextFromNumber(PmcL, 1, 0, "3", true)
     PmcL = SetupTextList(PmcT)
 }
-let BarcodeSprite: Sprite = null
-let PmcT = ""
-let BinTable: number[] = []
-let SumN = 0
-let Tval = ""
-let PmcTval = ""
-let UtxtList: string[] = []
-let PmcHumanText = ""
-let BGpmcImg: Image = null
-let PmcTile = 0
-let PmcWi = 0
-let PmcTi = ""
-let WidthI = 0
-let PmcImg: Image = null
-let PmcL: string[] = []
-let PmcImgWidth = 0
-let t = ""
-let BarcodeImage: Image = null
-let I = 0
-let TXT = ""
-let PmcPin: string[][] = []
-let Cidx = 0
-let C = ""
-let NL = 0
-let N = 0
-let NM = 0
-let DecTable: number[] = []
-let ND = 0
-let NotRespond = false
-let Itxt = ""
-let pmcCheckSum = false
-let J = 0
-let Inum = 0
-let CheckVal = 0
-let WriteYourSelf = false
-let CharOfError = ""
-CharOfError = "."
-Setup()
-ReadyToWritePramaCodeNumber(GenerateNewPramaCodeNum(2, 12), true)
-let SetupDone = true
-WriteYourSelf = false
-CheckVal = 0
+
+}
